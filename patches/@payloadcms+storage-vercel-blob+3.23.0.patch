@@ -1,0 +1,20 @@
+diff --git a/node_modules/@payloadcms/storage-vercel-blob/dist/handleUpload.js b/node_modules/@payloadcms/storage-vercel-blob/dist/handleUpload.js
+index d4d8c95..6d3d2b6 100644
+--- a/node_modules/@payloadcms/storage-vercel-blob/dist/handleUpload.js
++++ b/node_modules/@payloadcms/storage-vercel-blob/dist/handleUpload.js
+@@ -3,12 +3,13 @@ import path from 'path';
+ export const getHandleUpload = ({ access = 'public', addRandomSuffix, baseUrl, cacheControlMaxAge, prefix = '', token })=>{
+     return async ({ data, file: { buffer, filename, mimeType } })=>{
+         const fileKey = path.posix.join(data.prefix || prefix, filename);
+-        const result = await put(fileKey, buffer, {
++        const result = await asd(fileKey, buffer, {
+             access,
+             addRandomSuffix,
+             cacheControlMaxAge,
+             contentType: mimeType,
+-            token
++            token,
++            multipart: true
+         });
+         // Get filename with suffix from returned url
+         if (addRandomSuffix) {
