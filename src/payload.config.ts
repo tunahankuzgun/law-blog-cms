@@ -68,7 +68,7 @@ export default buildConfig({
   collections: [Pages, Posts, Media, Categories, Users],
   upload: {
     limits: {
-      fileSize: 20000000, // 20MB in bytes
+      fileSize: 5000000, // 5MB, written in bytes
     },
   },
   cors: [getServerSideURL()].filter(Boolean),
