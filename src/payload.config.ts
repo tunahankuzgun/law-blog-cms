@@ -66,6 +66,11 @@ export default buildConfig({
     },
   }),
   collections: [Pages, Posts, Media, Categories, Users],
+  upload: {
+    limits: {
+      fileSize: 20000000, // 20MB in bytes
+    },
+  },
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [
