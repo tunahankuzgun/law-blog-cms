@@ -664,6 +664,27 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           },
         },
       },
+      {
+        blockName: 'Carousel Block',
+        blockType: 'carousel',
+        slides: [
+          {
+            caption: 'This is a caption',
+            image: heroImage.id,
+            link: 'https://payloadcms.com',
+          },
+          {
+            caption: 'This is another caption',
+            image: heroImage.id,
+            link: 'https://payloadcms.com',
+          },
+          {
+            caption: 'This is yet another caption',
+            image: heroImage.id,
+            link: 'https://payloadcms.com',
+          },
+        ],
+      },
     ],
     meta: {
       description: 'An open-source website built with Payload and Next.js.',

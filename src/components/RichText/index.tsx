@@ -18,9 +18,11 @@ import type {
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
 } from '@/payload-types'
+import { CarouselBlockPropTypes as CarouselBlockProps } from '@/blocks/Carousel/Component'
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/utilities/ui'
+import { CarouselBlock } from '@/blocks/Carousel/Component'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -52,6 +54,7 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     ),
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
+    carousel: ({ node }: any) => <CarouselBlock {...node.fields} />,
   },
 })
 
