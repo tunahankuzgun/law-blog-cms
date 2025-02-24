@@ -27,6 +27,7 @@ import { CarouselBlock } from '@/blocks/Carousel/Component'
 type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps>
+  | SerializedBlockNode<CarouselBlockProps>
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
   const { value, relationTo } = linkNode.fields.doc!
@@ -54,7 +55,9 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     ),
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
     cta: ({ node }) => <CallToActionBlock {...node.fields} />,
-    carousel: ({ node }: any) => <CarouselBlock {...node.fields} />,
+    carousel: ({ node }: { node: SerializedBlockNode<CarouselBlockProps> }) => (
+      <CarouselBlock {...node.fields} />
+    ),
   },
 })
 
