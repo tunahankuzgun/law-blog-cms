@@ -10,7 +10,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import { Card, CardContent } from '@/components/ui/card'
 
 export type CarouselBlockProps = {
   blockType: 'carouselBlock'
@@ -38,14 +37,15 @@ export const CarouselBlock: React.FC<CarouselBlockPropTypes> = ({ slides }) => {
             {slides.map((slide, index) => {
               return (
                 <CarouselItem key={index}>
-                  <div className="p-1">
-                    <Card>
-                      <CardContent className="flex aspect-square items-center justify-center p-6">
-                        <ImageMedia className="object-cover" fill={false} resource={slide.image} />
-                        <p>{slide.caption}</p>
-                        <p>{slide.link}</p>
-                      </CardContent>
-                    </Card>
+                  <div className="flex items-center justify-center p-2">
+                    <ImageMedia
+                      className="object-cover"
+                      fill={false}
+                      resource={slide.image}
+                      size=""
+                    />
+                    <p>{slide.caption}</p>
+                    <p>{slide.link}</p>
                   </div>
                 </CarouselItem>
               )

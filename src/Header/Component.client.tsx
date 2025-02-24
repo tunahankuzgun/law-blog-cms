@@ -40,7 +40,6 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [headerTheme])
 
-  console.log(scrollYValue)
   return (
     <header
       className={`container sticky top-0 z-20 transition-all duration-1000 ${scrollYValue > 95 ? 'bg-black' : ''} `}
