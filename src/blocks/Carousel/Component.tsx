@@ -1,6 +1,16 @@
+'use client'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import React from 'react'
 import type { Media as MediaType } from '@/payload-types'
+import Autoplay from 'embla-carousel-autoplay'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel'
+import { Card, CardContent } from '@/components/ui/card'
 
 export type CarouselBlockProps = {
   blockType: 'carouselBlock'
@@ -12,19 +22,39 @@ export type CarouselBlockPropTypes = {
 }
 
 export const CarouselBlock: React.FC<CarouselBlockPropTypes> = ({ slides }) => {
-  // console.log('CarouselBlock', props)
+  const plugin = React.useRef(Autoplay({ delay: 2000, stopOnInteraction: true }))
 
   return (
-    <div className="container">
-      {slides.map((slide, index) => {
-        return (
-          <div key={index}>
-            <ImageMedia fill={false} resource={slide.image} />
-            <p>{slide.caption}</p>
-            <p>{slide.link}</p>
-          </div>
-        )
-      })}
+    <div className="">
+      <div className="container">
+        <h1 className="text-center text-4xl font-semibold">REFERENCES</h1>
+        <Carousel
+          plugins={[plugin.current]}
+          className="w-full max-w-screen-md mx-auto"
+          onMouseEnter={plugin.current.stop}
+          onMouseLeave={plugin.current.reset}
+        >
+          <CarouselContent>
+            {slides.map((slide, index) => {
+              return (
+                <CarouselItem key={index}>
+                  <div className="p-1">
+                    <Card>
+                      <CardContent className="flex aspect-square items-center justify-center p-6">
+                        <ImageMedia className="object-cover" fill={false} resource={slide.image} />
+                        <p>{slide.caption}</p>
+                        <p>{slide.link}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              )
+            })}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      </div>
     </div>
   )
 }
