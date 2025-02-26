@@ -249,6 +249,7 @@ export interface Post {
   };
   relatedPosts?: (number | Post)[] | null;
   categories?: (number | Category)[] | null;
+  isWorkArea?: boolean | null;
   meta?: {
     title?: string | null;
     /**
@@ -1156,6 +1157,7 @@ export interface PostsSelect<T extends boolean = true> {
   content?: T;
   relatedPosts?: T;
   categories?: T;
+  isWorkArea?: T;
   meta?:
     | T
     | {

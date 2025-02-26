@@ -27,6 +27,11 @@ export default async function Page({ params: paramsPromise }: Args) {
 
   const posts = await payload.find({
     collection: 'posts',
+    where: {
+      isWorkArea: {
+        equals: false,
+      },
+    },
     depth: 1,
     limit: 12,
     page: sanitizedPageNumber,
@@ -73,6 +78,11 @@ export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
   const { totalDocs } = await payload.count({
     collection: 'posts',
+    where: {
+      isWorkArea: {
+        equals: false,
+      },
+    },
     overrideAccess: false,
   })
 

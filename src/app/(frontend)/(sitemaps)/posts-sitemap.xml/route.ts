@@ -26,6 +26,7 @@ const getPostsSitemap = unstable_cache(
       select: {
         slug: true,
         updatedAt: true,
+        isWorkArea: true,
       },
     })
 
@@ -35,7 +36,9 @@ const getPostsSitemap = unstable_cache(
       ? results.docs
           .filter((post) => Boolean(post?.slug))
           .map((post) => ({
-            loc: `${SITE_URL}/posts/${post?.slug}`,
+            loc: post.isWorkArea
+              ? `${SITE_URL}/calisma-alanlari/${post?.slug}`
+              : `${SITE_URL}/posts/${post?.slug}`,
             lastmod: post.updatedAt || dateFallback,
           }))
       : []

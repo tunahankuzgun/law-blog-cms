@@ -38,12 +38,7 @@ export const CarouselBlock: React.FC<CarouselBlockPropTypes> = ({ slides }) => {
               return (
                 <CarouselItem key={index}>
                   <div className="flex items-center justify-center p-2">
-                    <ImageMedia
-                      className="object-cover"
-                      fill={false}
-                      resource={slide.image}
-                      size=""
-                    />
+                    <ImageMedia className="object-cover" fill={false} resource={slide.image} />
                     <p>{slide.caption}</p>
                     <p>{slide.link}</p>
                   </div>

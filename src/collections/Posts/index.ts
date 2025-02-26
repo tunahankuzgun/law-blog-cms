@@ -132,6 +132,13 @@ export const Posts: CollectionConfig<'posts'> = {
               hasMany: true,
               relationTo: 'categories',
             },
+            {
+              name: 'isWorkArea',
+              type: 'checkbox',
+              label: 'Is Work Area?',
+              defaultValue: false,
+              required: false,
+            },
           ],
           label: 'Meta',
         },
