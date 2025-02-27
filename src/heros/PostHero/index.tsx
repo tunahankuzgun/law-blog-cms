@@ -8,7 +8,8 @@ import { formatAuthors } from '@/utilities/formatAuthors'
 
 export const PostHero: React.FC<{
   post: Post
-}> = ({ post }) => {
+  isWorkArea?: boolean
+}> = ({ post, isWorkArea = false }) => {
   const { categories, heroImage, populatedAuthors, publishedAt, title } = post
 
   const hasAuthors =
@@ -52,7 +53,7 @@ export const PostHero: React.FC<{
                 </div>
               </div>
             )}
-            {publishedAt && (
+            {publishedAt && !isWorkArea && (
               <div className="flex flex-col gap-1">
                 <p className="text-sm">Date Published</p>
 

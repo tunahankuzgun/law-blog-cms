@@ -27,10 +27,10 @@ export default async function Page() {
       <PageClient />
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
+          <h1>Our Services</h1>
         </div>
       </div>
-      <CollectionArchive relationTo="calisma-alanlari" posts={posts.docs} />
+      <CollectionArchive relationTo="calisma-alanlari" posts={posts.docs} isServices />
     </div>
   )
 }

@@ -38,21 +38,23 @@ export default async function Post({ params: paramsPromise }: Args) {
   const { slug = '' } = await paramsPromise
   const url = '/calisma-alanlari/' + slug
   const post = await queryPostBySlug({ slug })
-
+  const allServices = await queryAllServices()
   if (!post) return <PayloadRedirects url={url} />
 
   return (
     <article className="pt-16 pb-16">
       <PageClient />
-      {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
       {/* {draft && <LivePreviewListener />}  */}
-      <PostHero post={post} />
-      <div className="container">
-        <h1 className="text-4xl font-bold mt-16 mb-8">TKTKTKTKT</h1>
-        <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
+      <PostHero isWorkArea={true} post={post} />
+      <div className="flex flex-col items-center gap-4 pt-8">
+        <div className="container relative">
+          <div className="flex">
+            <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
+          </div>
+        </div>
       </div>
-      {/* <div className="container"><RelatedPosts post={post} /></div>   */}
+      <div className="container"></div>
     </article>
   )
 }
@@ -76,4 +78,24 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
   })
 
   return result.docs?.[0] || null
+})
+
+const queryAllServices = cache(async () => {
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
+    collection: 'posts',
+    where: {
+      isWorkArea: {
+        equals: true,
+      },
+    },
+    limit: 100,
+    select: {
+      title: true,
+      slug: true,
+    },
+  })
+
+  return result.docs || []
 })
