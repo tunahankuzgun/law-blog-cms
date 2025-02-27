@@ -3,10 +3,12 @@ import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
+import Image from 'next/image'
 
 import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import { ImageMedia } from '../Media/ImageMedia'
 
 export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title'>
 
@@ -22,7 +24,9 @@ export const Card: React.FC<{
   const { card, link } = useClickableCard({})
   const { className, doc, relationTo, showCategories, title: titleFromProps, isServiceCard } = props
 
-  const { slug, categories, meta, title } = doc || {}
+  if (!doc) return null
+
+  const { slug, categories, meta, title } = doc
   const { description, image: metaImage } = meta || {}
 
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
@@ -32,43 +36,38 @@ export const Card: React.FC<{
 
   return (
     <article
-      className={cn(
+      className={
         isServiceCard
-          ? 'flex items-center p-6 border border-border rounded-lg bg-card hover:cursor-pointer hover:bg-accent/10 transition-colors'
-          : 'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
-        className,
-      )}
+          ? 'rounded-lg overflow-hidden hover:cursor-pointer'
+          : cn(
+              'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
+              className,
+            )
+      }
       ref={card.ref}
     >
       {isServiceCard ? (
-        <>
-          <div className="flex-1">
-            {titleToUse && (
-              <h3 className="text-xl font-semibold mb-2">
-                <Link href={href} ref={link.ref}>
-                  {titleToUse}
-                </Link>
-              </h3>
+        <Link href={`/${relationTo}/${doc.slug}`} className="group flex flex-col h-full">
+          <div className="relative aspect-[16/9] w-full overflow-hidden">
+            {metaImage && typeof metaImage !== 'string' && (
+              <ImageMedia
+                resource={metaImage}
+                imgClassName="object-cover transition-transform duration-300 group-hover:scale-105"
+                fill
+              />
             )}
-            {description && <p className="text-muted-foreground">{sanitizedDescription}</p>}
           </div>
-          <div className="ml-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
+          <div className="flex flex-col p-6">
+            <h3 className="text-xl text-center font-semibold text-gray-900 dark:text-white mb-4">
+              {doc.title}
+            </h3>
+            <div className="flex mt-auto items-center justify-center">
+              <button className="inline-flex  px-4 py-2 text-sm font-medium text-white bg-[#5C4B3C] hover:bg-[#4A3C30] rounded-md transition-colors">
+                Detaylar
+              </button>
+            </div>
           </div>
-        </>
+        </Link>
       ) : (
         <>
           <div className="relative w-full">
