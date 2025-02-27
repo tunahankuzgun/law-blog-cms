@@ -47,7 +47,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
                   format: 0,
                   mode: 'normal',
                   style: '',
-                  text: 'Payload Website Template',
+                  text: 'Bilgiç Hukuk Bürosu',
                   version: 1,
                 },
               ],
@@ -687,9 +687,10 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
       },
     ],
     meta: {
+      //TODO
       description: 'An open-source website built with Payload and Next.js.',
       image: heroImage.id,
-      title: 'Payload Website Template',
+      title: 'Bilgiç Hukuk Bürosu',
     },
     title: 'Home',
   }
