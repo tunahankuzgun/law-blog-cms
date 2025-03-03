@@ -22,7 +22,11 @@ module.exports = {
         disallow: ['/admin/*', '/api/*', '/_next/*', '/preview/*'],
       },
     ],
-    additionalSitemaps: [`${SITE_URL}/pages-sitemap.xml`, `${SITE_URL}/posts-sitemap.xml`],
+    additionalSitemaps: [
+      `${SITE_URL}/pages-sitemap.xml`,
+      `${SITE_URL}/posts-sitemap.xml`,
+      `${SITE_URL}/calisma-alanlari-sitemap.xml`,
+    ],
   },
   transform: async (config, path) => {
     // Custom priority and changefreq for paths

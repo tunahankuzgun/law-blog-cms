@@ -3,7 +3,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { unstable_cache } from 'next/cache'
 
-const getPostsSitemap = unstable_cache(
+const getCalismaAlanlariSitemap = unstable_cache(
   async () => {
     const payload = await getPayload({ config })
     const SITE_URL =
@@ -23,7 +23,7 @@ const getPostsSitemap = unstable_cache(
           equals: 'published',
         },
         isWorkArea: {
-          equals: false,
+          equals: true,
         },
       },
       select: {
@@ -39,21 +39,20 @@ const getPostsSitemap = unstable_cache(
       ? results.docs
           .filter((post) => Boolean(post?.slug))
           .map((post) => ({
-            loc: `${SITE_URL}/posts/${post?.slug}`,
+            loc: `${SITE_URL}/calisma-alanlari/${post?.slug}`,
             lastmod: post.updatedAt || dateFallback,
           }))
       : []
 
     return sitemap
   },
-  ['posts-sitemap'],
+  ['calisma-alanlari-sitemap'],
   {
-    tags: ['posts-sitemap'],
+    tags: ['calisma-alanlari-sitemap'],
   },
 )
 
 export async function GET() {
-  const sitemap = await getPostsSitemap()
-
+  const sitemap = await getCalismaAlanlariSitemap()
   return getServerSideSitemap(sitemap)
 }
