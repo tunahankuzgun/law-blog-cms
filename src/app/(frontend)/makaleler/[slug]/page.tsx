@@ -51,7 +51,7 @@ type Args = {
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
-  const url = '/posts/' + slug
+  const url = '/makaleler/' + slug
 
   const post = await queryPostBySlug({ slug })
 

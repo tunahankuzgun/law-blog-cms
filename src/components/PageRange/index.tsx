@@ -7,8 +7,8 @@ const defaultLabels = {
 
 const defaultCollectionLabels = {
   posts: {
-    plural: 'Posts',
-    singular: 'Post',
+    plural: 'Makaleler',
+    singular: 'Makale',
   },
 }
 
@@ -49,9 +49,9 @@ export const PageRange: React.FC<{
       {(typeof totalDocs === 'undefined' || totalDocs === 0) && 'Search produced no results.'}
       {typeof totalDocs !== 'undefined' &&
         totalDocs > 0 &&
-        `Showing ${indexStart}${indexStart > 0 ? ` - ${indexEnd}` : ''} of ${totalDocs} ${
-          totalDocs > 1 ? plural : singular
-        }`}
+        `${totalDocs} makale arasından ${indexStart}${
+          indexStart > 0 ? ` - ${indexEnd}` : ''
+        } gösteriliyor`}
     </div>
   )
 }

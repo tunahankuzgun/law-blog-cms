@@ -5,12 +5,12 @@ import { Card, CardPostData } from '@/components/Card'
 
 export type Props = {
   posts: CardPostData[]
-  relationTo?: 'posts' | 'calisma-alanlari'
+  relationTo?: 'makaleler' | 'calisma-alanlari'
   isServices?: boolean
 }
 
 export const CollectionArchive: React.FC<Props> = (props) => {
-  const { posts, relationTo = 'posts', isServices } = props
+  const { posts, relationTo = 'makaleler', isServices } = props
 
   return (
     <div className={cn('container py-8')}>

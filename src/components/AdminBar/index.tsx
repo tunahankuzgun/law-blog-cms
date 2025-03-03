@@ -16,16 +16,16 @@ const baseClass = 'admin-bar'
 
 const collectionLabels = {
   pages: {
-    plural: 'Pages',
-    singular: 'Page',
+    plural: 'Sayfalar',
+    singular: 'Sayfa',
   },
   posts: {
-    plural: 'Posts',
-    singular: 'Post',
+    plural: 'Makaleler',
+    singular: 'Makale',
   },
   projects: {
-    plural: 'Projects',
-    singular: 'Project',
+    plural: 'Projeler',
+    singular: 'Proje',
   },
 }
 

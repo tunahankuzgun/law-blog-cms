@@ -18,13 +18,13 @@ module.exports = {
     policies: [
       {
         userAgent: '*',
-        allow: ['/', '/posts/', '/calisma-alanlari/', '/hakkimizda/', '/iletisim/'],
+        allow: ['/', '/makaleler/', '/calisma-alanlari/', '/hakkimizda/', '/iletisim/'],
         disallow: ['/admin/*', '/api/*', '/_next/*', '/preview/*'],
       },
     ],
     additionalSitemaps: [
       `${SITE_URL}/pages-sitemap.xml`,
-      `${SITE_URL}/posts-sitemap.xml`,
+      `${SITE_URL}/makaleler-sitemap.xml`,
       `${SITE_URL}/calisma-alanlari-sitemap.xml`,
     ],
   },
@@ -33,7 +33,7 @@ module.exports = {
     const priorities = {
       '/': 1.0,
       '/calisma-alanlari': 0.9,
-      '/posts': 0.8,
+      '/makaleler': 0.8,
       '/hakkimizda': 0.7,
       '/iletisim': 0.7,
     }
@@ -41,7 +41,7 @@ module.exports = {
     const changefreqs = {
       '/': 'daily',
       '/calisma-alanlari': 'weekly',
-      '/posts': 'daily',
+      '/makaleler': 'daily',
       '/hakkimizda': 'monthly',
       '/iletisim': 'monthly',
     }

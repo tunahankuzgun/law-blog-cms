@@ -3,7 +3,6 @@ import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
-import Image from 'next/image'
 
 import type { Post } from '@/payload-types'
 
@@ -16,7 +15,7 @@ export const Card: React.FC<{
   alignItems?: 'center'
   className?: string
   doc?: CardPostData
-  relationTo?: 'posts' | 'calisma-alanlari'
+  relationTo?: 'makaleler' | 'calisma-alanlari'
   showCategories?: boolean
   title?: string
   isServiceCard?: boolean
@@ -53,7 +52,6 @@ export const Card: React.FC<{
               <ImageMedia
                 resource={metaImage}
                 imgClassName="object-cover transition-transform duration-300 group-hover:scale-105"
-                fill
               />
             )}
           </div>
