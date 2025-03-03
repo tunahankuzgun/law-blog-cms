@@ -32,7 +32,7 @@ export const generateMeta = async (args: {
 
   // Use doc.meta.title and description exactly as is if they exist
   if (doc?.meta?.title) {
-    title = `${doc.meta.title} | Bilgiç Hukuk Bürosu`
+    title = `${doc.meta.title}`
   } else {
     title = 'Bilgiç Hukuk Bürosu | Profesyonel Hukuki Danışmanlık'
   }
