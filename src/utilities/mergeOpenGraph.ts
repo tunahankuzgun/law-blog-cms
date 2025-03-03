@@ -3,14 +3,18 @@ import { getServerSideURL } from './getURL'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'An open-source website built with Payload and Next.js.',
+  description:
+    'Bilgiç Hukuk Bürosu - İş hukuku, ticaret hukuku, gayrimenkul hukuku ve aile hukuku alanlarında uzman avukatlarımızla hizmetinizdeyiz. Profesyonel hukuki danışmanlık için bize ulaşın.',
   images: [
     {
       url: `${getServerSideURL()}/website-template-OG.webp`,
+      alt: 'Bilgiç Hukuk Bürosu Logo',
     },
   ],
   siteName: 'Bilgiç Hukuk Bürosu',
-  title: 'Bilgiç Hukuk Bürosu',
+  title: 'Bilgiç Hukuk Bürosu | Profesyonel Hukuk ve Danışmanlık Hizmetleri',
+  locale: 'tr_TR',
+  countryName: 'Türkiye',
 }
 
 export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {

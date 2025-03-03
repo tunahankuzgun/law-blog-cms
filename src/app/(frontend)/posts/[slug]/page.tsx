@@ -8,12 +8,14 @@ import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
 
-import type { Post } from '@/payload-types'
+import type { Post, Media } from '@/payload-types'
 
 import { PostHero } from '@/heros/PostHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import Script from 'next/script'
+import { getServerSideURL } from '@/utilities/getURL'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -50,17 +52,54 @@ export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
   const url = '/posts/' + slug
+
   const post = await queryPostBySlug({ slug })
 
-  if (!post) return <PayloadRedirects url={url} />
+  if (!post) {
+    return <PayloadRedirects url={url} />
+  }
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.meta?.description,
+    image:
+      post.meta?.image && typeof post.meta.image === 'object' && 'url' in post.meta.image
+        ? `${getServerSideURL()}${post.meta.image.url}`
+        : undefined,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt,
+    author: {
+      '@type': 'Organization',
+      name: 'Bilgiç Hukuk Bürosu',
+      url: getServerSideURL(),
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Bilgiç Hukuk Bürosu',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${getServerSideURL()}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${getServerSideURL()}${url}`,
+    },
+  }
 
   return (
-    <article className="pt-16 pb-16">
+    <article className="pt-16 pb-24">
+      <Script
+        id="article-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <PageClient />
 
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />
-
       {draft && <LivePreviewListener />}
 
       <PostHero post={post} />

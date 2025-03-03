@@ -7,14 +7,47 @@ const SITE_URL =
 module.exports = {
   siteUrl: SITE_URL,
   generateRobotsTxt: true,
-  exclude: ['/posts-sitemap.xml', '/pages-sitemap.xml', '/*', '/posts/*'],
+  exclude: ['/admin/*', '/api/*'],
+  alternateRefs: [
+    {
+      href: SITE_URL,
+      hreflang: 'tr',
+    },
+  ],
   robotsTxtOptions: {
     policies: [
       {
         userAgent: '*',
-        disallow: '/admin/*',
+        allow: ['/', '/posts/', '/calisma-alanlari/', '/hakkimizda/', '/iletisim/'],
+        disallow: ['/admin/*', '/api/*', '/_next/*', '/preview/*'],
       },
     ],
     additionalSitemaps: [`${SITE_URL}/pages-sitemap.xml`, `${SITE_URL}/posts-sitemap.xml`],
+  },
+  transform: async (config, path) => {
+    // Custom priority and changefreq for paths
+    const priorities = {
+      '/': 1.0,
+      '/calisma-alanlari': 0.9,
+      '/posts': 0.8,
+      '/hakkimizda': 0.7,
+      '/iletisim': 0.7,
+    }
+
+    const changefreqs = {
+      '/': 'daily',
+      '/calisma-alanlari': 'weekly',
+      '/posts': 'daily',
+      '/hakkimizda': 'monthly',
+      '/iletisim': 'monthly',
+    }
+
+    return {
+      loc: path,
+      changefreq: changefreqs[path] || 'monthly',
+      priority: priorities[path] || 0.5,
+      lastmod: new Date().toISOString(),
+      alternateRefs: config.alternateRefs ?? [],
+    }
   },
 }

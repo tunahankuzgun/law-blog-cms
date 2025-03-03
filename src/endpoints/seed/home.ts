@@ -687,10 +687,10 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
       },
     ],
     meta: {
-      //TODO
-      description: 'An open-source website built with Payload and Next.js.',
+      description:
+        'Bilgiç Hukuk Bürosu olarak, alanında uzman avukatlarımızla ticaret hukuku, iş hukuku, gayrimenkul hukuku ve daha birçok alanda hizmet vermekteyiz. Hukuki sorunlarınız için profesyonel çözümler sunuyoruz.',
       image: heroImage.id,
-      title: 'Bilgiç Hukuk Bürosu',
+      title: 'Bilgiç Hukuk Bürosu | Ana Sayfa - Hukuk ve Danışmanlık Hizmetleri',
     },
     title: 'Home',
   }
