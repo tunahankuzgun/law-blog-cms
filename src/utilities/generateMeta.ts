@@ -30,20 +30,18 @@ export const generateMeta = async (args: {
   let description =
     'Bilgiç Hukuk Bürosu - İş hukuku, ticaret hukuku, gayrimenkul hukuku ve aile hukuku alanlarında uzman avukatlarımızla hizmetinizdeyiz.'
 
-  // Add specific suffixes based on content type
+  // Use doc.meta.title and description exactly as is if they exist
   if (doc?.meta?.title) {
-    if ('isWorkArea' in doc && doc.isWorkArea) {
-      title = `${doc.meta.title} | Çalışma Alanları | Bilgiç Hukuk Bürosu`
-      description = `${doc.meta.description || `${doc.meta.title} alanında uzman avukatlarımızla hukuki danışmanlık ve dava takibi hizmetleri sunuyoruz.`}`
-    } else if ('layout' in doc) {
-      title = `${doc.meta.title} | Bilgiç Hukuk Bürosu`
-      description = doc.meta.description || description
-    } else {
-      title = `${doc.meta.title} | Hukuki Makaleler | Bilgiç Hukuk Bürosu`
-      description =
-        doc.meta.description ||
-        `${doc.meta.title} konusunda detaylı hukuki bilgi ve güncel içerikler.`
-    }
+    title = `${doc.meta.title} | Bilgiç Hukuk Bürosu`
+  } else {
+    title = 'Bilgiç Hukuk Bürosu | Profesyonel Hukuki Danışmanlık'
+  }
+
+  if (doc?.meta?.description) {
+    description = doc.meta.description
+  } else {
+    description =
+      'Bilgiç Hukuk Bürosu - İş hukuku, ticaret hukuku, gayrimenkul hukuku ve aile hukuku alanlarında uzman avukatlarımızla hizmetinizdeyiz.'
   }
 
   const keywords = [
