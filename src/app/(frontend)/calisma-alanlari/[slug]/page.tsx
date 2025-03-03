@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { draftMode } from 'next/headers'
@@ -6,6 +7,9 @@ import React, { cache } from 'react'
 import PageClient from '../page.client'
 import { PostHero } from '@/heros/PostHero'
 import RichText from '@/components/RichText'
+import { getServerSideURL } from '@/utilities/getURL'
+import Script from 'next/script'
+import { generateMeta } from '@/utilities/generateMeta'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -36,12 +40,52 @@ type Args = {
 export default async function Post({ params: paramsPromise }: Args) {
   const { slug = '' } = await paramsPromise
   const url = '/calisma-alanlari/' + slug
+
   const post = await queryPostBySlug({ slug })
-  const allServices = await queryAllServices()
+
+  if (!post) {
+    return <PayloadRedirects url={url} />
+  }
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.meta?.description,
+    image:
+      post.meta?.image && typeof post.meta.image === 'object' && 'url' in post.meta.image
+        ? `${getServerSideURL()}${post.meta.image.url}`
+        : undefined,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt,
+    author: {
+      '@type': 'Organization',
+      name: 'Bilgiç Hukuk Bürosu',
+      url: getServerSideURL(),
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Bilgiç Hukuk Bürosu',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${getServerSideURL()}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${getServerSideURL()}${url}`,
+    },
+  }
+
   if (!post) return <PayloadRedirects url={url} />
 
   return (
     <article className="pt-16 pb-16">
+      <Script
+        id="article-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <PageClient />
       <PayloadRedirects disableNotFound url={url} />
       {/* {draft && <LivePreviewListener />}  */}
@@ -79,22 +123,9 @@ const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-const queryAllServices = cache(async () => {
-  const payload = await getPayload({ config: configPromise })
+export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
+  const { slug = '' } = await paramsPromise
+  const post = await queryPostBySlug({ slug })
 
-  const result = await payload.find({
-    collection: 'posts',
-    where: {
-      isWorkArea: {
-        equals: true,
-      },
-    },
-    limit: 100,
-    select: {
-      title: true,
-      slug: true,
-    },
-  })
-
-  return result.docs || []
-})
+  return generateMeta({ doc: post })
+}

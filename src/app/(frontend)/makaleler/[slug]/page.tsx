@@ -70,11 +70,7 @@ export default async function Post({ params: paramsPromise }: Args) {
         : undefined,
     datePublished: post.publishedAt,
     dateModified: post.updatedAt,
-    author: {
-      '@type': 'Organization',
-      name: 'Bilgiç Hukuk Bürosu',
-      url: getServerSideURL(),
-    },
+    author: post.authors,
     publisher: {
       '@type': 'Organization',
       name: 'Bilgiç Hukuk Bürosu',
