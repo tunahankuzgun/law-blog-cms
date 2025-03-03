@@ -1,4 +1,5 @@
 import type { Metadata } from 'next/types'
+import type { Media } from '@/payload-types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
@@ -7,6 +8,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
+import { generateMeta } from '@/utilities/generateMeta'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -61,8 +63,25 @@ export default async function Page() {
   )
 }
 
-export function generateMetadata(): Metadata {
-  return {
-    title: `Bilgiç Hukuk Bürosu Makaleler`,
+export async function generateMetadata(): Promise<Metadata> {
+  const metaImage: Media = {
+    id: 1,
+    url: '/makaleler-og.webp',
+    alt: 'Bilgiç Hukuk Bürosu Makaleler',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    width: 1200,
+    height: 630,
+    mimeType: 'image/webp',
   }
+
+  return generateMeta({
+    doc: {
+      meta: {
+        title: 'Makaleler | Bilgiç Hukuk Bürosu',
+        description: 'Bilgiç Hukuk Bürosu hukuki makaleleri ve güncel hukuki bilgiler.',
+        image: metaImage,
+      },
+    },
+  })
 }
