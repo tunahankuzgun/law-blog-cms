@@ -26,6 +26,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     resource,
     size: sizeFromProps,
     src: srcFromProps,
+    card,
     loading: loadingFromProps,
   } = props
 
@@ -59,7 +60,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     <picture>
       <NextImage
         alt={alt || ''}
-        className={cn(imgClassName)}
+        className={cn(imgClassName, card ? '!w-full max-h-[400px] min-h-[400px] object-cover' : '')}
         fill={fill}
         height={!fill ? height : undefined}
         placeholder="blur"
