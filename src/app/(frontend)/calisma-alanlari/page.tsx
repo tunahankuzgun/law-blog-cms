@@ -23,6 +23,7 @@ export default async function Page() {
       slug: true,
       categories: true,
       meta: true,
+      isWorkArea: true,
     },
   })
 
@@ -34,7 +35,7 @@ export default async function Page() {
           <h1>Çalışma Alanları</h1>
         </div>
       </div>
-      <CollectionArchive relationTo="calisma-alanlari" posts={posts.docs} isServices />
+      <CollectionArchive posts={posts.docs} isServices />
     </div>
   )
 }

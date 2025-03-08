@@ -10,7 +10,7 @@ export type Props = {
 }
 
 export const CollectionArchive: React.FC<Props> = (props) => {
-  const { posts, relationTo = 'makaleler', isServices } = props
+  const { posts, isServices } = props
 
   return (
     <div className={cn('container py-8')}>
@@ -29,7 +29,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
                   <Card
                     key={index}
                     doc={result}
-                    relationTo={relationTo}
+                    relationTo={result.isWorkArea ? 'calisma-alanlari' : 'makaleler'}
                     isServiceCard
                     className="flex flex-col h-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
                   />
@@ -37,7 +37,12 @@ export const CollectionArchive: React.FC<Props> = (props) => {
               }
               return (
                 <div className="col-span-4" key={index}>
-                  <Card className="h-full" doc={result} relationTo={relationTo} showCategories />
+                  <Card
+                    className="h-full"
+                    doc={result}
+                    relationTo={result.isWorkArea ? 'calisma-alanlari' : 'makaleler'}
+                    showCategories
+                  />
                 </div>
               )
             }
