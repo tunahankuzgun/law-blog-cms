@@ -2,6 +2,7 @@ import { Button, type ButtonProps } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
+import { TransitionLink } from '@/components/PageTransition'
 
 import type { Page, Post } from '@/payload-types'
 
@@ -45,22 +46,25 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const size = appearance === 'link' ? 'clear' : sizeFromProps
   const newTabProps = newTab ? { rel: 'noopener noreferrer', target: '_blank' } : {}
 
+  // If opening in a new tab, use regular Link to avoid transition animation
+  const LinkComponent = newTab ? Link : TransitionLink
+
   /* Ensure we don't break any styles set by richText */
   if (appearance === 'inline') {
     return (
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <LinkComponent className={cn(className)} href={href || url || ''} {...newTabProps}>
         {label && label}
         {children && children}
-      </Link>
+      </LinkComponent>
     )
   }
 
   return (
     <Button asChild className={className} size={size} variant={appearance}>
-      <Link className={cn(className)} href={href || url || ''} {...newTabProps}>
+      <LinkComponent className={cn(className)} href={href || url || ''} {...newTabProps}>
         {label && label}
         {children && children}
-      </Link>
+      </LinkComponent>
     </Button>
   )
 }

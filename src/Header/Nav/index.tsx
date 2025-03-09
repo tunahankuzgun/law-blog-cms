@@ -5,7 +5,7 @@ import React from 'react'
 import type { Header as HeaderType } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import Link from 'next/link'
+import { TransitionLink } from '@/components/PageTransition'
 import { SearchIcon } from 'lucide-react'
 
 export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
@@ -16,10 +16,10 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
       {navItems.map(({ link }, i) => {
         return <CMSLink key={i} {...link} appearance="link" />
       })}
-      <Link href="/search">
+      <TransitionLink href="/search">
         <span className="sr-only">Search</span>
         <SearchIcon className="w-5 text-primary" />
-      </Link>
+      </TransitionLink>
     </nav>
   )
 }
