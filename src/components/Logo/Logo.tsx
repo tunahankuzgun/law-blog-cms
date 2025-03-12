@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 import React from 'react'
 import BilgicLogo from '../../../public/bilgic-hukuk.png'
+import BilgicLogoDark from '../../../public/bilgic-hukuk-black.png'
 import { TransitionLink } from '@/components/PageTransition'
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
   priority?: 'auto' | 'high' | 'low'
   linkClassName?: string
   href?: string
+  theme?: string
 }
 
 export const Logo = (props: Props) => {
@@ -19,6 +21,7 @@ export const Logo = (props: Props) => {
     className,
     linkClassName,
     href,
+    theme,
   } = props
 
   const loading = loadingFromProps || 'lazy'
@@ -33,7 +36,7 @@ export const Logo = (props: Props) => {
       fetchPriority={priority}
       decoding="async"
       className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src={BilgicLogo}
+      src={theme === 'dark' ? BilgicLogo : BilgicLogoDark}
     />
   )
 

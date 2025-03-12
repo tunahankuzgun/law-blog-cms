@@ -31,7 +31,9 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
     window.addEventListener('scroll', handleScroll)
 
-    if (headerTheme && headerTheme !== theme) setTheme(headerTheme)
+    if (headerTheme && headerTheme !== theme) {
+      setTheme(headerTheme)
+    }
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
@@ -46,7 +48,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     >
       <div className="container">
         <div className="py-8 flex justify-between">
-          <Logo loading="eager" priority="high" className="" href="/" />
+          <Logo loading="eager" priority="high" className="" href="/" theme={theme || undefined} />
           <HeaderNav data={data} />
         </div>
       </div>

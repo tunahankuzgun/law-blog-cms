@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import React, { useState, useEffect, useCallback, useContext, createContext } from 'react'
-
+import { useTheme } from '@/providers/Theme'
 // Create a context to manage navigation state
 interface TransitionContextType {
   isTransitioning: boolean
@@ -143,6 +143,7 @@ const PageTransitionEffect: React.FC<{
   animationPhase: AnimationPhase
 }> = ({ isTransitioning, animationPhase }) => {
   const [windowHeight, setWindowHeight] = useState(0)
+  const { theme } = useTheme()
 
   // Set up window dimensions
   useEffect(() => {
@@ -185,7 +186,7 @@ const PageTransitionEffect: React.FC<{
     <div className="fixed inset-0 z-50 pointer-events-none">
       {/* Main transition overlay */}
       <motion.div
-        className="fixed inset-x-0 bottom-0 z-50 bg-transitionBackground"
+        className="fixed inset-x-0 bottom-0 z-50 bg-background"
         initial={{ height: 0 }}
         animate={getAnimationProps()}
         transition={{
@@ -214,7 +215,7 @@ const PageTransitionEffect: React.FC<{
         }}
       >
         <Image
-          src={`/${encodeURIComponent('bilgic-hukuk-loading.png')}`}
+          src={`/${encodeURIComponent(theme === 'dark' ? 'bilgic-hukuk-loading.png' : 'bilgic-hukuk-loading-dark.png')}`}
           alt="Bilgiç Hukuk Logo"
           width={400}
           height={133}
