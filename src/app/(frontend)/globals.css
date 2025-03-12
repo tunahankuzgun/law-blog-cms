@@ -16,7 +16,8 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
+    --transition-background: 220 16% 22%;
+    
     --card: 240 5% 96%;
     --card-foreground: 222.2 84% 4.9%;
 
@@ -52,6 +53,7 @@
   [data-theme='dark'] {
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
+    --transition-background: 222.2 47.4% 11.2%;
 
     --card: 0 0% 4%;
     --card-foreground: 210 40% 98%;

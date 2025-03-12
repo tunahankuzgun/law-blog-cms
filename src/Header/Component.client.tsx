@@ -41,12 +41,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   return (
     <header
-      className={`container sticky top-0 z-20 transition-all duration-1000 ${scrollYValue > 95 ? '' : ''} `}
+      className={`sticky top-0 z-20 transition-all duration-1000 ${scrollYValue > 95 ? 'bg-background/80 backdrop-blur-sm' : ''}`}
       {...(theme ? { 'data-theme': theme } : {})}
     >
-      <div className="py-8 flex justify-between">
-        <Logo loading="eager" priority="high" className="invert dark:invert-0" href="/" />
-        <HeaderNav data={data} />
+      <div className="container">
+        <div className="py-8 flex justify-between">
+          <Logo loading="eager" priority="high" className="" href="/" />
+          <HeaderNav data={data} />
+        </div>
       </div>
     </header>
   )

@@ -185,7 +185,7 @@ const PageTransitionEffect: React.FC<{
     <div className="fixed inset-0 z-50 pointer-events-none">
       {/* Main transition overlay */}
       <motion.div
-        className="fixed inset-x-0 bottom-0 z-50 bg-background"
+        className="fixed inset-x-0 bottom-0 z-50 bg-transitionBackground"
         initial={{ height: 0 }}
         animate={getAnimationProps()}
         transition={{

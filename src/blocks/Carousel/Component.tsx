@@ -26,7 +26,7 @@ export const CarouselBlock: React.FC<CarouselBlockPropTypes> = ({ slides }) => {
   return (
     <div className="">
       <div className="container">
-        <h1 className="text-center text-4xl font-semibold">Referanslar</h1>
+        <h1 className="text-center text-4xl mb-6 font-semibold">Referanslar</h1>
         <Carousel
           plugins={[plugin.current]}
           className="w-full max-w-screen-md mx-auto"
