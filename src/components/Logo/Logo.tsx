@@ -1,9 +1,11 @@
+'use client'
 import clsx from 'clsx'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BilgicLogo from '../../../public/bilgic-hukuk.png'
 import BilgicLogoDark from '../../../public/bilgic-hukuk-black.png'
 import { TransitionLink } from '@/components/PageTransition'
+import { useTheme } from '@payloadcms/ui'
 
 interface Props {
   className?: string
@@ -21,8 +23,22 @@ export const Logo = (props: Props) => {
     className,
     linkClassName,
     href,
-    theme,
+    theme: headerTheme,
   } = props
+
+  const { theme: globalTheme } = useTheme()
+  const [currentTheme, setCurrentTheme] = useState<string | undefined>(undefined)
+
+  // Determine the effective theme based on both headerTheme and globalTheme
+  useEffect(() => {
+    // If headerTheme is explicitly set, use it
+    if (headerTheme) {
+      setCurrentTheme(headerTheme)
+    } else {
+      // Otherwise fall back to global theme
+      setCurrentTheme(globalTheme)
+    }
+  }, [headerTheme, globalTheme])
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
@@ -36,7 +52,7 @@ export const Logo = (props: Props) => {
       fetchPriority={priority}
       decoding="async"
       className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src={theme === 'dark' ? BilgicLogo : BilgicLogoDark}
+      src={currentTheme === 'dark' ? BilgicLogo : BilgicLogoDark}
     />
   )
 
