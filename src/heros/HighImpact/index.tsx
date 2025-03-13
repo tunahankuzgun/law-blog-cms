@@ -21,7 +21,7 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
       data-theme="dark"
     >
       {/* Semi-transparent overlay for better text readability */}
-      <div className="absolute inset-0 bg-black bg-opacity-40 z-0"></div>
+      <div className="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
       <div className="container mb-8 z-10 relative flex items-center justify-center">
         <div className="max-w-[36.5rem] md:text-center">
           {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}

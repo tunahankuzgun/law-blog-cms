@@ -57,7 +57,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         .join(', ')
 
   return (
-    <picture>
+    <picture className="flex justify-center">
       <NextImage
         alt={alt || ''}
         className={cn(imgClassName, card ? '!w-full max-h-[400px] min-h-[400px] object-cover' : '')}
