@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react'
 import BilgicLogo from '../../../public/bilgic-hukuk.png'
 import BilgicLogoDark from '../../../public/bilgic-hukuk-black.png'
 import { TransitionLink } from '@/components/PageTransition'
-import { useTheme } from '@payloadcms/ui'
 
 interface Props {
   className?: string
@@ -13,7 +12,7 @@ interface Props {
   priority?: 'auto' | 'high' | 'low'
   linkClassName?: string
   href?: string
-  theme?: string
+  theme: string
 }
 
 export const Logo = (props: Props) => {
@@ -26,19 +25,25 @@ export const Logo = (props: Props) => {
     theme: headerTheme,
   } = props
 
-  const { theme: globalTheme } = useTheme()
   const [currentTheme, setCurrentTheme] = useState<string | undefined>(undefined)
 
   // Determine the effective theme based on both headerTheme and globalTheme
   useEffect(() => {
     // If headerTheme is explicitly set, use it
     if (headerTheme) {
+      if (headerTheme === 'auto') {
+        const localTheme = localStorage.getItem('theme')
+        // If the user has a theme preference, use it
+        if (localTheme) {
+          setCurrentTheme(localTheme)
+          return
+        }
+        // Otherwise, default to dark theme
+        setCurrentTheme('dark')
+      }
       setCurrentTheme(headerTheme)
-    } else {
-      // Otherwise fall back to global theme
-      setCurrentTheme(globalTheme)
     }
-  }, [headerTheme, globalTheme])
+  }, [headerTheme, currentTheme])
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'

@@ -12,7 +12,8 @@ const PageClient: React.FC = () => {
 
   useIsomorphicLayoutEffect(() => {
     // Read from localStorage directly to ensure we get the most current value
-    const storedTheme = localStorage.getItem('payload-theme') || 'light'
+    const storedTheme =
+      localStorage.getItem('payload-theme') || localStorage.getItem('theme') || 'dark'
 
     // Use the stored theme directly instead of relying on the theme context value
     setHeaderTheme(storedTheme)

@@ -37,7 +37,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             priority="high"
             className=""
             href="/"
-            theme={headerTheme || undefined}
+            theme={headerTheme || 'auto'}
           />
           <HeaderNav data={data} />
         </div>

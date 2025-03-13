@@ -67,39 +67,55 @@ export const TransitionContextProvider: React.FC<{
   children: React.ReactNode
 }> = ({ children }) => {
   const router = useRouter()
+  const pathname = usePathname() // Get current pathname
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [nextRoute, setNextRoute] = useState<string | null>(null)
   const [animationPhase, setAnimationPhase] = useState<AnimationPhase>('none')
+  const [routingComplete, setRoutingComplete] = useState(false)
+  const [holdStartTime, setHoldStartTime] = useState<number | null>(null)
+  const [targetPathname, setTargetPathname] = useState<string | null>(null)
 
   // Handle navigation after the covering animation completes
   useEffect(() => {
     if (animationPhase === 'navigating' && nextRoute) {
-      const navigateNow = async () => {
-        // Navigate to the new route
-        router.push(nextRoute)
+      // Extract the pathname from the next route
+      // This handles both absolute and relative paths
+      const url = new URL(nextRoute, window.location.origin)
+      setTargetPathname(url.pathname)
 
-        // Wait a short time for the navigation to complete
-        await new Promise((resolve) => setTimeout(resolve, 100))
-
-        // Start the holding phase (pause before uncovering)
-        setAnimationPhase('holding')
-      }
-
-      navigateNow()
+      // Navigate to the new route
+      router.push(nextRoute)
     }
   }, [animationPhase, nextRoute, router])
 
+  // Detect when pathname has changed to match our target
+  useEffect(() => {
+    if (targetPathname && pathname === targetPathname && animationPhase === 'navigating') {
+      // Small buffer to ensure content has rendered
+      setTimeout(() => {
+        setRoutingComplete(true)
+        setHoldStartTime(Date.now())
+        setAnimationPhase('holding')
+      }, 200)
+    }
+  }, [pathname, targetPathname, animationPhase])
+
   // Handle the holding phase (pause before uncovering)
   useEffect(() => {
-    if (animationPhase === 'holding') {
+    if (animationPhase === 'holding' && routingComplete && holdStartTime) {
+      const MINIMUM_HOLD_TIME = 500 // 1.5 seconds minimum display time
+
+      const elapsedTime = Date.now() - holdStartTime
+      const remainingTime = Math.max(0, MINIMUM_HOLD_TIME - elapsedTime)
+
       // Wait before starting the uncovering phase
       const timer = setTimeout(() => {
         setAnimationPhase('uncovering')
-      }, 1000) // 1 second pause
+      }, remainingTime)
 
       return () => clearTimeout(timer)
     }
-  }, [animationPhase])
+  }, [animationPhase, routingComplete, holdStartTime])
 
   // Handle the end of the animation
   useEffect(() => {
@@ -109,6 +125,8 @@ export const TransitionContextProvider: React.FC<{
         setIsTransitioning(false)
         setNextRoute(null)
         setAnimationPhase('none')
+        setRoutingComplete(false)
+        setHoldStartTime(null)
       }, 1000) // This should match the duration of the uncovering animation
 
       return () => clearTimeout(timer)
@@ -119,6 +137,8 @@ export const TransitionContextProvider: React.FC<{
     setIsTransitioning(true)
     setNextRoute(href)
     setAnimationPhase('covering')
+    setRoutingComplete(false)
+    setTargetPathname(null) // Reset target pathname
 
     // After the covering animation completes, move to the navigating phase
     setTimeout(() => {
