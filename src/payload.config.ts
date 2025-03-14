@@ -1,6 +1,8 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import nodemailer from 'nodemailer'
 
 import sharp from 'sharp' // sharp-import
 import path from 'path'
@@ -64,6 +66,19 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+  }),
+  email: nodemailerAdapter({
+    defaultFromAddress: 'info@payloadcms.com',
+    defaultFromName: 'Payload',
+
+    transport: await nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      auth: {
+        user: 'hyman.runolfsson41@ethereal.email',
+        pass: 'PHecmaetDSRjSHp6hG',
+      },
+    }),
   }),
   collections: [Pages, Posts, Media, Categories, Users],
   upload: {
