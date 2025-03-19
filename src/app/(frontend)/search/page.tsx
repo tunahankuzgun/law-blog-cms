@@ -3,28 +3,17 @@ import type { Metadata } from 'next/types'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React, { Suspense } from 'react'
+import React from 'react'
 import { Search } from '@/search/Component'
 import PageClient from './page.client'
 import { CardPostData } from '@/components/Card'
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
-// Memoization cache
-const contentCache = new Map<string, string>()
-
-// Optimized helper function to extract text content from Lexical rich text
+// Helper function to extract text content from Lexical rich text
 const extractTextFromLexical = (content: SerializedEditorState | undefined): string => {
   if (!content || !content.root) return ''
 
-  // Create a cache key from the content
-  const cacheKey = JSON.stringify(content)
-
-  // Check if we have cached this content before
-  if (contentCache.has(cacheKey)) {
-    return contentCache.get(cacheKey)!
-  }
-
-  // Extract text (existing logic)
+  // Extract text from root children
   let text = ''
   const extractFromNode = (node: any) => {
     // If it's a text node, add its text content
@@ -54,9 +43,6 @@ const extractTextFromLexical = (content: SerializedEditorState | undefined): str
   // Start extraction from the root
   extractFromNode(content.root)
 
-  // Cache the result
-  contentCache.set(cacheKey, text.trim())
-
   return text.trim()
 }
 
@@ -65,9 +51,6 @@ type Args = {
     q: string
   }>
 }
-
-export const revalidate = 3600 // Revalidate once per hour
-
 export default async function Page({ searchParams: searchParamsPromise }: Args) {
   const { q: query } = await searchParamsPromise
   const payload = await getPayload({ config: configPromise })
@@ -83,6 +66,7 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
         slug: true,
         categories: true,
         meta: true,
+        content: true,
         isWorkArea: true,
       },
       pagination: false,
@@ -101,68 +85,47 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
           </div>
         </div>
 
-        <Suspense fallback={<div className="container">Arama sonuçları yükleniyor...</div>}>
-          {posts.totalDocs > 0 ? (
-            <CollectionArchive posts={posts.docs as CardPostData[]} />
-          ) : (
-            <div className="container">Arama sonucu bulunamadı.</div>
-          )}
-        </Suspense>
+        {posts.totalDocs > 0 ? (
+          <CollectionArchive posts={posts.docs as CardPostData[]} />
+        ) : (
+          <div className="container">Arama sonucu bulunamadı.</div>
+        )}
       </div>
     )
   }
 
-  // Fetch both result sets concurrently
-  const [dbFilteredPosts, contentSearchPosts] = await Promise.all([
-    payload.find({
-      collection: 'posts',
-      depth: 1,
-      limit: 20,
-      where: {
-        or: [
-          { title: { contains: query } },
-          { slug: { contains: query } },
-          { 'meta.title': { contains: query } },
-          { 'meta.description': { contains: query } },
-          // We'll handle content search separately
-        ],
-      },
-      select: {
-        title: true,
-        slug: true,
-        categories: true,
-        meta: true,
-        isWorkArea: true,
-      },
-      pagination: false,
-    }),
+  // If there is a query, get all posts (with a higher limit) to search in content
+  const allPosts = await payload.find({
+    collection: 'posts',
+    depth: 1,
+    limit: 100, // Increased limit to ensure we get enough posts to search through
+    select: {
+      title: true,
+      slug: true,
+      categories: true,
+      meta: true,
+      content: true,
+      isWorkArea: true,
+    },
+    pagination: false,
+  })
 
-    payload.find({
-      collection: 'posts',
-      depth: 1,
-      limit: 100,
-      select: {
-        title: true,
-        slug: true,
-        categories: true,
-        meta: true,
-        content: true,
-        isWorkArea: true,
-      },
-      pagination: false,
-    }),
-  ])
+  // Filter posts by all criteria including content and categories
+  const filteredPosts = allPosts.docs.filter((post) => {
+    // Check title, meta fields, and slug
+    const titleMatch = post.title?.toLowerCase().includes(query.toLowerCase())
+    const metaDescMatch = post.meta?.description?.toLowerCase().includes(query.toLowerCase())
+    const metaTitleMatch = post.meta?.title?.toLowerCase().includes(query.toLowerCase())
+    const slugMatch = post.slug?.toLowerCase().includes(query.toLowerCase())
 
-  // Content and category search
-  const contentFilteredPosts = contentSearchPosts.docs.filter((post) => {
-    // Content search
+    // Check content
     let contentMatch = false
     if (post.content) {
       const contentText = extractTextFromLexical(post.content as SerializedEditorState)
       contentMatch = contentText.toLowerCase().includes(query.toLowerCase())
     }
 
-    // Category search
+    // Check categories
     let categoryMatch = false
     if (post.categories && Array.isArray(post.categories) && post.categories.length > 0) {
       categoryMatch = post.categories.some((category) => {
@@ -173,26 +136,20 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       })
     }
 
-    return contentMatch || categoryMatch
+    // Return true if any field matches
+    return (
+      titleMatch || metaDescMatch || metaTitleMatch || slugMatch || contentMatch || categoryMatch
+    )
   })
 
-  // Merge and deduplicate results using a Map to avoid duplicates by ID
-  const allResultsMap = new Map()
-
-  // Add DB filtered posts
-  dbFilteredPosts.docs.forEach((post) => {
-    allResultsMap.set(post.id, post)
-  })
-
-  // Add content filtered posts
-  contentFilteredPosts.forEach((post) => {
-    allResultsMap.set(post.id, post)
-  })
-
-  // Create the final results object
+  // Create results object with filtered posts
   const totalResults = {
-    docs: Array.from(allResultsMap.values()) as CardPostData[],
-    totalDocs: allResultsMap.size,
+    ...allPosts,
+    docs: filteredPosts.map((post) => ({
+      ...post,
+      isWorkArea: post.isWorkArea,
+    })),
+    totalDocs: filteredPosts.length,
   }
 
   return (
@@ -208,13 +165,11 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
         </div>
       </div>
 
-      <Suspense fallback={<div className="container">Arama sonuçları yükleniyor...</div>}>
-        {totalResults.totalDocs > 0 ? (
-          <CollectionArchive posts={totalResults.docs as CardPostData[]} />
-        ) : (
-          <div className="container">Arama sonucu bulunamadı.</div>
-        )}
-      </Suspense>
+      {totalResults.totalDocs > 0 ? (
+        <CollectionArchive posts={totalResults.docs as CardPostData[]} />
+      ) : (
+        <div className="container">Arama sonucu bulunamadı.</div>
+      )}
     </div>
   )
 }
