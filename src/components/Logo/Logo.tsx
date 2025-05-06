@@ -56,7 +56,7 @@ export const Logo = (props: Props) => {
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
+      className={clsx('max-w-[9.375rem] min-w-[34px]  w-full max-h-[34px] min-h-[34px]', className)}
       src={currentTheme === 'dark' ? BilgicLogo : BilgicLogoDark}
     />
   )
