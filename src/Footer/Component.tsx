@@ -22,8 +22,8 @@ export async function Footer() {
 
   return (
     <footer className="mt-auto py-5 border-t-2 border-gray-300 bg-black dark:bg-card text-white">
-      <div className="container flex items-center justify-between flex-wrap gap-12 sm:gap-14">
-        <div className="flex-1 flex flex-col gap-3.5">
+      <div className="container flex items-center justify-between mb-4 flex-wrap gap-7 sm:gap-14">
+        <div className="flex-1 flex flex-col gap-7">
           <div className="flex items-center gap-2.5">
             <Logo href="/" className="flex-shrink-0 !max-w-[50px]" theme="dark" />
             <h1 className="text-xl dark:text-white">theblog by Kuzgun</h1>
@@ -32,7 +32,7 @@ export async function Footer() {
             Bilgiç Hukuk Bürosu olarak güvenli, şeffaf ve etkin çözümler sunuyoruz. Adaletinize
             rehberlik etmek için buradayız.
           </p>
-          <div className="mt-2.5 flex sm:justify-start justify-center gap-2.5">
+          <div className=" flex sm:justify-start justify-center gap-2.5">
             <FaFacebook size={24} />
             <FaYoutube size={24} />
             <FaLinkedinIn size={24} />
@@ -70,10 +70,18 @@ export async function Footer() {
               <p className="text-white">info@theblog.com</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 min-w-[69px]">
+          <div className=" sm:flex hidden items-center justify-center w-full sm:w-auto">
             <ThemeSelector />
           </div>
         </div>
+        <div className="flex sm:hidden items-center justify-center w-full sm:w-auto">
+          <ThemeSelector />
+        </div>
+      </div>
+      <div className="text-center border-t-2 border-l-gray-800 text-sm">
+        <p className="text-white pt-4 text-sm items-center justify-center">
+          &copy; {new Date().getFullYear()} Bilgiç Hukuk Bürosu. Tüm hakları saklıdır.
+        </p>
       </div>
     </footer>
   )

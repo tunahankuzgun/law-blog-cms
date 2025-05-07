@@ -1,7 +1,7 @@
 'use client'
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Mail, MessageCircle, Phone } from 'lucide-react'
+import { FaWhatsapp, FaPhoneAlt, FaRegEnvelope } from 'react-icons/fa'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { useForm, Controller } from 'react-hook-form'
@@ -85,19 +85,19 @@ export default function ContactForm() {
         <CardContent>
           <div className="grid gap-4 sm:grid-cols-3">
             <div className="flex flex-col items-center gap-2">
-              <Mail className="h-8 w-8 text-primary" />
+              <FaRegEnvelope className="h-8 w-8 text-primary" />
               <Button onClick={handleEmail} className="w-full">
                 E-posta
               </Button>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <MessageCircle className="h-8 w-8 text-primary" />
+              <FaWhatsapp className="h-8 w-8 text-primary" />
               <Button onClick={handleWhatsApp} className="w-full">
                 WhatsApp
               </Button>
             </div>
             <div className="flex flex-col items-center gap-2">
-              <Phone className="h-8 w-8 text-primary" />
+              <FaPhoneAlt className="h-8 w-8 text-primary" />
               <Button onClick={handleCall} className="w-full">
                 Ara
               </Button>
