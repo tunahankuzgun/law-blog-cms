@@ -1,17 +1,24 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
+// import { getCachedGlobal } from '@/utilities/getGlobals'
 import React from 'react'
-import Image from 'next/image'
 import type { Footer } from '@/payload-types'
 
 import { ThemeSelector } from '@/providers/Theme/ThemeSelector'
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
-import { Facebook, FacebookIcon, Instagram, Linkedin, Youtube } from 'lucide-react'
+import {
+  FaLinkedinIn,
+  FaInstagram,
+  FaYoutube,
+  FaFacebook,
+  FaMapPin,
+  FaPhone,
+  FaEnvelope,
+} from 'react-icons/fa'
 
 export async function Footer() {
-  const footerData: Footer = await getCachedGlobal('footer', 1)()
+  // const footerData: Footer = await getCachedGlobal('footer', 1)()
 
-  const navItems = footerData?.navItems || []
+  // const navItems = footerData?.navItems || []
 
   return (
     <footer className="mt-auto py-5 border-t-2 border-gray-300 bg-black dark:bg-card text-white">
@@ -22,60 +29,51 @@ export async function Footer() {
             <h1 className="text-xl dark:text-white">theblog by Kuzgun</h1>
           </div>
           <p className="font-light dark:text-gray-300">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim necessitatibus similique
-            aspernatur obcaecati veritatis. Aperiam cum porro sequi, totam minima consequuntur,
-            aspernatur deleniti vero repellendus dorales.
+            Bilgiç Hukuk Bürosu olarak güvenli, şeffaf ve etkin çözümler sunuyoruz. Adaletinize
+            rehberlik etmek için buradayız.
           </p>
-          <div className="mt-2.5 flex gap-2.5">
-            <Facebook width={24} height={24} />
-            <Youtube width={24} height={24} />
-            <Linkedin width={24} height={24} />
-            <Instagram width={24} height={24} />
-            {/* <Image src="/" alt="facebook" width={18} height={18} />
-            <Image src="/" alt="instagram" width={18} height={18} />
-            <Image src="/" alt="tiktok" width={18} height={18} />
-            <Image src="/" alt="youtube" width={18} height={18} /> */}
+          <div className="mt-2.5 flex sm:justify-start justify-center gap-2.5">
+            <FaFacebook size={24} />
+            <FaYoutube size={24} />
+            <FaLinkedinIn size={24} />
+            <FaInstagram size={24} />
           </div>
         </div>
-        <div className="flex-1 flex lg:justify-end lg:gap-[100px] gap-[50px] w-full justify-between text-sm lg:text-base">
+        <div className="flex-1 flex lg:justify-end lg:gap-[100px] gap-[30px] w-full justify-around text-sm lg:text-base">
           <div className="flex flex-col gap-2.5 font-light">
-            <span className="font-bold dark:text-white">Links</span>
-            {navItems.map(({ link }, i) => {
-              return <CMSLink className="dark:text-gray-300" key={i} {...link} />
-            })}
-          </div>
-          <div className="flex flex-col gap-2.5 font-light">
-            <span className="font-bold dark:text-white">Tags</span>
-            <CMSLink className="dark:text-gray-300" url="/">
-              Style
+            <span className="font-bold dark:text-white">Sayfalar</span>
+            <CMSLink className="" url="/makaleler">
+              Makaleler
             </CMSLink>
-            <CMSLink className="dark:text-gray-300" url="/">
-              Fashion
+            <CMSLink className="" url="/hakkimizda">
+              Hakkımızda
             </CMSLink>
-            <CMSLink className="dark:text-gray-300" url="/">
-              Coding
+            <CMSLink className="" url="/calisma-alanlari">
+              Çalışma Alanları
             </CMSLink>
-            <CMSLink className="dark:text-gray-300" url="/">
-              Travel
+            <CMSLink className="" url="/iletisim">
+              İletişim
             </CMSLink>
           </div>
-          <div className="flex flex-col gap-2.5 font-light">
-            <span className="font-bold dark:text-white">Social</span>
-            <CMSLink className="dark:text-gray-300" url="/">
-              Facebook
-            </CMSLink>
-            <CMSLink className="dark:text-gray-300" url="/">
-              Instagram
-            </CMSLink>
-            <CMSLink className="dark:text-gray-300" url="/">
-              Tiktok
-            </CMSLink>
-            <CMSLink className="dark:text-gray-300" url="/">
-              Youtube
-            </CMSLink>
+          <div className="flex flex-col gap-2.5 text-sm font-light">
+            <span className="font-bold dark:text-white">İletişim</span>
+            <div className="flex items-center gap-2">
+              <FaMapPin size={16} />
+              <p className="text-white">Şişli, İstanbul</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <FaPhone size={16} />
+              <p className="text-white">+90 555 555 55 55</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <FaEnvelope size={16} />
+              <p className="text-white">info@theblog.com</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 min-w-[69px]">
+            <ThemeSelector />
           </div>
         </div>
-        <ThemeSelector />
       </div>
     </footer>
   )
