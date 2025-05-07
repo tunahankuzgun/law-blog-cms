@@ -10,11 +10,13 @@ import { useTheme } from '@/providers/Theme'
 interface TransitionContextType {
   isTransitioning: boolean
   startTransition: (href: string) => void
+  animationPhase: AnimationPhase
 }
 
 const TransitionContext = createContext<TransitionContextType>({
   isTransitioning: false,
   startTransition: () => {},
+  animationPhase: 'none',
 })
 
 // Custom Link component that intercepts navigation
@@ -147,7 +149,7 @@ export const TransitionContextProvider: React.FC<{
   }, [])
 
   return (
-    <TransitionContext.Provider value={{ isTransitioning, startTransition }}>
+    <TransitionContext.Provider value={{ isTransitioning, startTransition, animationPhase }}>
       {children}
       <PageTransitionEffect isTransitioning={isTransitioning} animationPhase={animationPhase} />
     </TransitionContext.Provider>
