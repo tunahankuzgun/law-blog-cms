@@ -26,7 +26,7 @@ export async function Footer() {
         <div className="flex-1 flex flex-col gap-7">
           <div className="flex items-center gap-2.5">
             <Logo href="/" className="flex-shrink-0 !max-w-[50px]" theme="dark" />
-            <h1 className="text-xl dark:text-white">theblog by Kuzgun</h1>
+            <h1 className="text-xl dark:text-white">Bilgiç Hukuk Bürosu</h1>
           </div>
           <p className="font-light dark:text-gray-300">
             Bilgiç Hukuk Bürosu olarak güvenli, şeffaf ve etkin çözümler sunuyoruz. Adaletinize

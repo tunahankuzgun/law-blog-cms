@@ -12,6 +12,8 @@ export const HeaderNav: React.FC<{
 }> = ({ data, isMobile = false, onNavigate }) => {
   const { startTransition } = useTransition()
   const navItems = data?.navItems || []
+  // Check if the page is home
+  const isHomePage = typeof window !== 'undefined' && window.location.pathname === '/'
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
@@ -37,7 +39,11 @@ export const HeaderNav: React.FC<{
             href={href}
             onClick={(e) => handleClick(e, href)}
             className={
-              isMobile ? 'text-xl font-medium text-white transition-colors relative group' : ''
+              isMobile
+                ? 'text-xl font-medium text-white transition-colors relative group'
+                : isHomePage
+                  ? 'text-white'
+                  : ''
             }
           >
             {link.label}
