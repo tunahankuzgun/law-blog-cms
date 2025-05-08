@@ -4,6 +4,7 @@ import React from 'react'
 import type { Header as HeaderType } from '@/payload-types'
 import { TransitionLink, useTransition } from '@/components/PageTransition'
 import { SearchIcon } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 export const HeaderNav: React.FC<{
   data: HeaderType
@@ -11,9 +12,9 @@ export const HeaderNav: React.FC<{
   onNavigate?: () => void
 }> = ({ data, isMobile = false, onNavigate }) => {
   const { startTransition } = useTransition()
+  const pathname = usePathname()
   const navItems = data?.navItems || []
-  // Check if the page is home
-  const isHomePage = typeof window !== 'undefined' && window.location.pathname === '/'
+  const isHomePage = pathname === '/'
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
