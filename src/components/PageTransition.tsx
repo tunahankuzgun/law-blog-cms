@@ -105,7 +105,7 @@ export const TransitionContextProvider: React.FC<{
   // Handle the holding phase (pause before uncovering)
   useEffect(() => {
     if (animationPhase === 'holding' && routingComplete && holdStartTime) {
-      const MINIMUM_HOLD_TIME = 500 // 1.5 seconds minimum display time
+      const MINIMUM_HOLD_TIME = 800 // 1.5 seconds minimum display time
 
       const elapsedTime = Date.now() - holdStartTime
       const remainingTime = Math.max(0, MINIMUM_HOLD_TIME - elapsedTime)
