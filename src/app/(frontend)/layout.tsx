@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               '@type': 'LegalService',
               name: 'Bilgiç Hukuk Bürosu',
               alternateName: 'Bilgic Law Firm',
-              image: `${getServerSideURL()}/website-template-OG.webp`,
+              image: `${getServerSideURL()}/calisma-alanlari-og.webp`,
               '@id': getServerSideURL(),
               url: getServerSideURL(),
               telephone: '+90XXXXXXXXXX', // Add your phone number

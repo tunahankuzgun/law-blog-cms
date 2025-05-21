@@ -7,7 +7,7 @@ const defaultOpenGraph: Metadata['openGraph'] = {
     'Bilgiç Hukuk Bürosu - İş hukuku, ticaret hukuku, gayrimenkul hukuku ve aile hukuku alanlarında uzman avukatlarımızla hizmetinizdeyiz. Profesyonel hukuki danışmanlık için bize ulaşın.',
   images: [
     {
-      url: `${getServerSideURL()}/website-template-OG.webp`,
+      url: `${getServerSideURL()}/calisma-alanlari-og.webp`,
       alt: 'Bilgiç Hukuk Bürosu Logo',
     },
   ],
