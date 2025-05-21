@@ -70,11 +70,11 @@ export async function Footer() {
               <p className="text-white">info@theblog.com</p>
             </div>
           </div>
-          <div className=" sm:flex hidden items-center justify-center w-full sm:w-auto">
+          <div className=" sm:flex hidden items-center justify-center w-full min-w-[74px] sm:w-auto">
             <ThemeSelector />
           </div>
         </div>
-        <div className="flex sm:hidden items-center justify-center w-full sm:w-auto">
+        <div className="flex sm:hidden items-center justify-center w-full min-w-[74px] sm:w-auto">
           <ThemeSelector />
         </div>
       </div>
