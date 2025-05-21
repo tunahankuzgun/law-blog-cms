@@ -44,6 +44,14 @@ const getPagesSitemap = unstable_cache(
         loc: `${SITE_URL}/calisma-alanlari`,
         lastmod: dateFallback,
       },
+      {
+        loc: `${SITE_URL}/iletisim`,
+        lastmod: dateFallback,
+      },
+      {
+        loc: `${SITE_URL}/hakkimizda`,
+        lastmod: dateFallback,
+      },
     ]
 
     const sitemap = results.docs
