@@ -25,7 +25,7 @@ export async function Footer() {
       <div className="container flex items-center justify-between mb-4 flex-wrap gap-7 sm:gap-14">
         <div className="flex-1 flex flex-col gap-7">
           <div className="flex items-center gap-2.5">
-            <Logo href="/" className="flex-shrink-0 !max-w-[50px]" theme="dark" />
+            <Logo href="/" className="flex-shrink-0 !max-w-[30.6px]" theme="dark" />
             <h1 className="text-xl dark:text-white">Bilgiç Hukuk Bürosu</h1>
           </div>
           <p className="font-light dark:text-gray-300">

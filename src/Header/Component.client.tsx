@@ -38,7 +38,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           <Logo
             loading="eager"
             priority="high"
-            className="w-[34px] md:w-auto"
+            className="w-[30.6px] md:w-auto"
             href="/"
             theme={headerTheme || 'auto'}
           />
