@@ -24,7 +24,7 @@ module.exports = {
     ],
     additionalSitemaps: [
       `${SITE_URL}/pages-sitemap.xml`,
-      `${SITE_URL}/makaleler-sitemap.xml`,
+      `${SITE_URL}/posts-sitemap.xml`,
       `${SITE_URL}/calisma-alanlari-sitemap.xml`,
     ],
   },
