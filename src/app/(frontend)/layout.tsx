@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <script
           id="law-firm-schema"
           type="application/ld+json"
-          src='/'
+          src="/"
           async
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
