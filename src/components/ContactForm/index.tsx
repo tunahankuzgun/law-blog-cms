@@ -16,6 +16,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
+import { useState } from 'react'
+import { toast } from 'sonner'
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'İsim en az 2 karakter olmalıdır.' }),
@@ -33,6 +35,7 @@ export default function ContactForm() {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,10 +47,12 @@ export default function ContactForm() {
     },
   })
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const watchTopic = watch('topic')
 
   const handleEmail = () => {
-    window.location.href = 'mailto:contact@example.com'
+    window.location.href = 'mailto:bilgicdogann@gmail.com'
   }
 
   const handleWhatsApp = () => {
@@ -60,18 +65,32 @@ export default function ContactForm() {
 
   const onSubmit = async (data: FormData) => {
     try {
-      // API endpoint'inize form verilerini gönderin
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(data),
-      // });
+      setIsSubmitting(true)
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
 
-      console.log('Form submitted', data)
-      // Form başarıyla gönderildikten sonra kullanıcıya bildirim gösterin
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Bir hata oluştu')
+      }
+
+      toast.success('Mesajınız başarıyla gönderildi', {
+        description: 'En kısa sürede size dönüş yapacağız.',
+      })
+      reset()
     } catch (error) {
       console.error('Form submission error:', error)
-      // Hata durumunda kullanıcıya bildirim gösterin
+      toast.error('Mesajınız gönderilirken bir hata oluştu', {
+        description: 'Lütfen daha sonra tekrar deneyin.',
+      })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -122,7 +141,7 @@ export default function ContactForm() {
                   <Input
                     className="focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     id="name"
-                    placeholder="Doğan Bilgiç"
+                    placeholder="Ad Soyad"
                     {...field}
                   />
                 )}
@@ -139,7 +158,7 @@ export default function ContactForm() {
                     className="focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     id="email"
                     type="email"
-                    placeholder="doganbilgic@gmail.com"
+                    placeholder="example@gmail.com"
                     {...field}
                   />
                 )}
@@ -204,8 +223,8 @@ export default function ContactForm() {
               />
               {errors.message && <p className="text-sm text-red-500">{errors.message.message}</p>}
             </div>
-            <Button type="submit" className="w-full">
-              Gönder
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? 'Gönderiliyor...' : 'Gönder'}
             </Button>
           </form>
         </CardContent>

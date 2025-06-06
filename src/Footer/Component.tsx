@@ -66,7 +66,9 @@ export async function Footer() {
             </div>
             <div className="flex items-center gap-2">
               <FaEnvelope size={16} />
-              <p className="text-white">info@theblog.com</p>
+              <a href="mailto:bilgicdogann@gmail.com" className="text-white">
+                bilgicdogann@gmail.com
+              </a>
             </div>
           </div>
           <div className=" sm:flex hidden items-center justify-center w-full min-w-[74px] sm:w-auto">

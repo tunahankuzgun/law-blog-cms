@@ -13,6 +13,7 @@ import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
+import { Toaster } from 'sonner'
 
 import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -172,6 +173,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             phoneNumber="+900000000000"
             message="Merhaba, hukuki danışmanlık almak istiyorum."
           />
+          <Toaster position="bottom-right" richColors />
         </Providers>
       </body>
     </html>
