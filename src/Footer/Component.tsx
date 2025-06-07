@@ -62,12 +62,12 @@ export async function Footer() {
             </div>
             <div className="flex items-center gap-2">
               <FaPhone size={16} />
-              <p className="text-white">+90 555 555 55 55</p>
+              <p className="text-white">+90 546 299 34 13</p>
             </div>
             <div className="flex items-center gap-2">
               <FaEnvelope size={16} />
-              <a href="mailto:bilgicdogann@gmail.com" className="text-white">
-                bilgicdogann@gmail.com
+              <a href="mailto:av.doganbilgic@gmail.com" className="text-white">
+                av.doganbilgic@gmail.com
               </a>
             </div>
           </div>

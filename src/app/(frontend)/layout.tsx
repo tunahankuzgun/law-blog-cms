@@ -42,7 +42,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               image: `${getServerSideURL()}/calisma-alanlari-og.webp`,
               '@id': getServerSideURL(),
               url: getServerSideURL(),
-              telephone: '+90XXXXXXXXXX', // Add your phone number
+              telephone: '+905462993413',
               address: {
                 '@type': 'PostalAddress',
                 streetAddress: '', // Add your street address
@@ -170,7 +170,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {children}
           <Footer />
           <WhatsAppButton
-            phoneNumber="+900000000000"
+            phoneNumber="+905462993413"
             message="Merhaba, hukuki danışmanlık almak istiyorum."
           />
           <Toaster position="bottom-right" richColors />

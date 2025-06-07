@@ -52,15 +52,15 @@ export default function ContactForm() {
   const watchTopic = watch('topic')
 
   const handleEmail = () => {
-    window.location.href = 'mailto:bilgicdogann@gmail.com'
+    window.location.href = 'mailto:av.doganbilgic@gmail.com'
   }
 
   const handleWhatsApp = () => {
-    window.open('https://wa.me/905XXXXXXXXX', '_blank')
+    window.open('https://wa.me/905462993413', '_blank')
   }
 
   const handleCall = () => {
-    window.location.href = 'tel:+90212XXXXXXX'
+    window.location.href = 'tel:+905462993413'
   }
 
   const onSubmit = async (data: FormData) => {
