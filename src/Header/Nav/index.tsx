@@ -15,6 +15,7 @@ export const HeaderNav: React.FC<{
   const pathname = usePathname()
   const navItems = data?.navItems || []
   const isHomePage = pathname === '/'
+  const isAboutPage = pathname === '/hakkimizda'
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
@@ -40,7 +41,7 @@ export const HeaderNav: React.FC<{
             href={href}
             onClick={(e) => handleClick(e, href)}
             className={
-              isMobile
+              isMobile || isAboutPage
                 ? 'text-xl font-medium text-white transition-colors relative group'
                 : isHomePage
                   ? 'text-white'
